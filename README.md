@@ -13,18 +13,27 @@ In order to use the package, you should follow these steps
 3- Instantiate CLTVModel 
 
  Use Case 1: CLV Analysis
+ 
 cltv_model = CLTVModel()
+
 cltv_model.load_data()
 
 Use case 2: Predictive Model
+
 cltv_model_with_predictive = CLTVModel(use_predictive_model=True)
+
 cltv_model_with_predictive.load_data()
 
 4- Obtain Results
+
 CLV Analysis:
+
 segments_summary = cltv_model.display_segments_summary()
+
 print(segments_summary)
 
 Predictive Model:
+
 cltv_predictions = cltv_model_with_predictive.predict_cltv()
+
 print(cltv_predictions)
