@@ -5,8 +5,11 @@
 This Python package, CLTVModel, helps retail businesses understand and optimize Customer Lifetime Value (CLTV). It handles tasks like loading data, doing calculations, using predictive models, and providing insights for smarter decisions.
 
 In order to use the package, you should follow these steps
+
 1- Install the package (pip install clv-analysis-package)
+
 2- Import the Package(from cltv_analysis_package import CLTVModel)
+
 3- Instantiate CLTVModel 
 
  Use Case 1: CLV Analysis
