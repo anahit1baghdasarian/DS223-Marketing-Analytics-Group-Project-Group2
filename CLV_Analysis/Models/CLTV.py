@@ -67,7 +67,7 @@ class CLTVModel:
         self.cltv_pred = None
         self.predicted_purchases = None
         self.segment = None
-        self.bgf = BetaGeoFitter()
+        self.bgf = BetaGeoFitter(penalizer_coef=0.001)
         self.ggf = GammaGammaFitter(penalizer_coef=0.01)
 
     def load_data(self, query='''
@@ -130,13 +130,13 @@ class CLTVModel:
         Calculate and set the sales amount based on unit price and quantity.
 
         Parameters:
-            df (pd.DataFrame): DataFrame to perform calculations on. Default is the 'df' attribute.
-            unit_price_col (str): Column name for unit price. Default is 'unit_price'.
-            quantity_col (str): Column name for quantity. Default is 'quantity'.
-            sales_amount_colname (str): Column name for sales amount. Default is 'sales_amount'.
+            - df (pd.DataFrame, optional): DataFrame to perform calculations on. Default is the 'df' attribute.
+            - unit_price_col (str, optional): Column name for unit price. Default is 'unit_price'.
+            - quantity_col (str, optional): Column name for quantity. Default is 'quantity'.
+            - sales_amount_colname (str, optional): Column name for sales amount. Default is 'sales_amount'.
 
         Returns:
-            pd.Series: Calculated sales amount.
+            pd.DataFrame: DataFrame with the sales amount column added.
         """
         if df is None:
             df = self.df
@@ -147,7 +147,7 @@ class CLTVModel:
  
         df[sales_amount_colname] = df[unit_price_col] * df[quantity_col]
         self.sales_amount = df[sales_amount_colname]
-        return self.sales_amount
+        return df
 
     def calculate_customer_summary(self, df = None, customer_id_col= 'customer_id',
                                    transaction_id_col= 'transaction_id', sales_amount_col = None, 
@@ -193,13 +193,13 @@ class CLTVModel:
         Calculate and set average order value.
 
         Parameters:
-            customer_summary (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary' attribute.
-            total_sales_amount_col (pd.Series): Series containing total sales amount. Default is the 'total_sales_amount' attribute.
-            total_transactions_col (pd.Series): Series containing total transactions. Default is the 'total_transactions' attribute.
-            average_order_value_colname (str): Column name for average order value. Default is 'average_order_value'.
+            - customer_summary (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary' attribute.
+            - total_sales_amount_col (pd.Series, optional): Series containing total sales amount. Default is the 'total_sales_amount' attribute.
+            - total_transactions_col (pd.Series, optional): Series containing total transactions. Default is the 'total_transactions' attribute.
+            - average_order_value_colname (str, optional): Column name for average order value. Default is 'average_order_value'.
 
         Returns:
-            pd.Series: Calculated average order value.
+            pd.DataFrame: Customer summary DataFrame with the average order value column added.
         """
         if customer_summary is None:
             customer_summary = self.customer_summary
@@ -214,8 +214,7 @@ class CLTVModel:
         
         customer_summary[average_order_value_colname] = total_sales_amount_col/ total_transactions_col
         self.average_order_value = customer_summary[average_order_value_colname]
-        return self.average_order_value
-
+        return customer_summary
 
     def calculate_purchase_frequency(self, customer_summary = None, 
                                      total_transactions_col = None , purchase_frequency_colname = 'purchase_frequency'):
@@ -223,12 +222,12 @@ class CLTVModel:
         Calculate and set purchase frequency.
 
         Parameters:
-            customer_summary (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary' attribute.
-            total_transactions_col (pd.Series): Series containing total transactions. Default is the 'total_transactions' attribute.
-            purchase_frequency_colname (str): Column name for purchase frequency. Default is 'purchase_frequency'.
+            - customer_summary (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary' attribute.
+            - total_transactions_col (pd.Series, optional): Series containing total transactions. Default is the 'total_transactions' attribute.
+            - purchase_frequency_colname (str, optional): Column name for purchase frequency. Default is 'purchase_frequency'.
 
         Returns:
-            pd.Series: Calculated purchase frequency.
+            pd.DataFrame: Customer summary DataFrame with the purchase frequency column added.
         """
         if customer_summary is None:
             customer_summary = self.customer_summary
@@ -241,20 +240,26 @@ class CLTVModel:
     
         customer_summary[purchase_frequency_colname] = total_transactions_col / customer_summary.shape[0]
         self.purchase_frequency = customer_summary[purchase_frequency_colname]
-        return self.purchase_frequency
+        return customer_summary
     
     def calculate_repeat_rate(self, customer_summary=None, total_transactions_col=None):
         """
         Calculate and set repeat rate.
 
         Parameters:
-            customer_summary (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary' attribute.
-            total_transactions_col (pd.Series): Series containing total transactions. Default is the 'total_transactions' attribute.
+            - customer_summary (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary' attribute.
+            - total_transactions_col (pd.Series, optional): Series containing total transactions. Default is the 'total_transactions' attribute.
 
         Returns:
-            float: Calculated repeat rate.
+            float: Calculated repeat rate. Returns 0 if no customers with more than one transaction are found.
+
+        Raises:
+            ValueError: If the required column is not present in the customer_summary DataFrame.
+            Warning: If no customers with more than one transaction are found, a warning is raised.
+
+        Notes:
+            The repeat rate is calculated as the ratio of customers with more than one transaction to the total number of customers.
         """
-        
         if customer_summary is None:
             customer_summary = self.customer_summary
 
@@ -276,7 +281,7 @@ class CLTVModel:
         else:
             repeat_rate = len(repeat_rate_df) / len(customer_summary)
             self.repeat_rate = repeat_rate
-            return self.repeat_rate
+            return repeat_rate
 
     def calculate_churn_rate(self, repeat_rate = None):
         """
@@ -293,7 +298,7 @@ class CLTVModel:
             repeat_rate = self.repeat_rate
         churn_rate = 1 - repeat_rate
         self.churn_rate = churn_rate
-        return self.churn_rate
+        return churn_rate
 
     def calculate_profit_margin(self, profit_margin_rate=0.10,
                                 customer_summary = None, total_sales_amount_col = None,
@@ -302,26 +307,35 @@ class CLTVModel:
         Calculate and set profit margin.
 
         Parameters:
-            profit_margin_rate (float): Profit margin rate to be applied. Default is 0.10.
-            customer_summary (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary' attribute.
-            total_sales_amount_col (pd.Series): Series containing total sales amount. Default is the 'total_sales_amount' attribute.
-            profit_margin_colname (str): Column name for profit margin. Default is 'profit_margin'.
+            - profit_margin_rate (float, optional): Profit margin rate to be applied. Default is 0.10.
+            - customer_summary (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary' attribute.
+            - total_sales_amount_col (pd.Series, optional): Series containing total sales amount. Default is the 'total_sales_amount' attribute.
+            - profit_margin_colname (str, optional): Column name for profit margin. Default is 'profit_margin'.
 
         Returns:
-            pd.Series: Calculated profit margin.
+            pd.DataFrame: Customer summary DataFrame with the profit margin column added.
+
+        Raises:
+            ValueError: If the required column is not present in the customer_summary DataFrame or if the DataFrame is empty.
+
+        Notes:
+            The profit margin is calculated by multiplying the total sales amount by the specified profit margin rate.
         """
         if customer_summary is None:
             customer_summary = self.customer_summary
+
         if len(customer_summary) == 0:
             raise ValueError(f"The {customer_summary} DataFrame is empty.")
+
         if total_sales_amount_col is None:
             total_sales_amount_col = self.total_sales_amount
+
         if total_sales_amount_col.name not in customer_summary.columns:
             raise ValueError(f"The {total_sales_amount_col.name} column is required in {customer_summary}.")
-        
+
         customer_summary[profit_margin_colname] = total_sales_amount_col * profit_margin_rate
         self.profit_margin = customer_summary[profit_margin_colname]
-        return self.profit_margin
+        return customer_summary
 
     def calculate_customer_value(self, customer_summary = None, average_order_value_col = None, purchase_frequency_col = None,
                                  customer_value_colname = 'customer_value'):
@@ -329,13 +343,19 @@ class CLTVModel:
         Calculate and set customer value.
 
         Parameters:
-            customer_summary (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary' attribute.
-            average_order_value_col (pd.Series): Series containing average order value. Default is the 'average_order_value' attribute.
-            purchase_frequency_col (pd.Series): Series containing purchase frequency. Default is the 'purchase_frequency' attribute.
-            customer_value_colname (str): Column name for customer value. Default is 'customer_value'.
+            - customer_summary (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary' attribute.
+            - average_order_value_col (pd.Series, optional): Series containing average order value. Default is the 'average_order_value' attribute.
+            - purchase_frequency_col (pd.Series, optional): Series containing purchase frequency. Default is the 'purchase_frequency' attribute.
+            - customer_value_colname (str, optional): Column name for customer value. Default is 'customer_value'.
 
         Returns:
-            pd.Series: Calculated customer value.
+            pd.DataFrame: Customer summary DataFrame with the customer value column added.
+
+        Raises:
+            ValueError: If the required columns are not present in the customer_summary DataFrame.
+
+        Notes:
+            Customer value is calculated as the product of average order value and purchase frequency.
         """
         if customer_summary is None:
             customer_summary = self.customer_summary
@@ -349,7 +369,7 @@ class CLTVModel:
             raise ValueError(f"The {purchase_frequency_col.name} column is required in {customer_summary}.")
         customer_summary[customer_value_colname] = average_order_value_col * purchase_frequency_col
         self.customer_value = customer_summary[customer_value_colname]
-        return self.customer_value
+        return customer_summary
 
     def calculate_cltv(self, customer_summary = None ,churn_rate = None, customer_value_col = None, 
                        profit_margin_col = None, cltv_colname = 'clv'):
@@ -357,14 +377,20 @@ class CLTVModel:
         Calculate and set customer lifetime value (CLTV).
 
         Parameters:
-            customer_summary (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary' attribute.
-            churn_rate (float): Churn rate of customers. Default is the 'churn_rate' attribute.
-            customer_value_col (pd.Series): Series containing customer value. Default is the 'customer_value' attribute.
-            profit_margin_col (pd.Series): Series containing profit margin. Default is the 'profit_margin' attribute.
-            cltv_colname (str): Column name for CLTV. Default is 'cltv'.
+            - customer_summary (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary' attribute.
+            - churn_rate (float, optional): Churn rate of customers. Default is the 'churn_rate' attribute.
+            - customer_value_col (pd.Series, optional): Series containing customer value. Default is the 'customer_value' attribute.
+            - profit_margin_col (pd.Series, optional): Series containing profit margin. Default is the 'profit_margin' attribute.
+            - cltv_colname (str, optional): Column name for CLTV. Default is 'cltv'.
 
         Returns:
-            pd.Series: Calculated CLTV.
+            pd.DataFrame: Customer summary DataFrame with the CLTV column added.
+
+        Raises:
+            ValueError: If the required columns are not present in the customer_summary DataFrame.
+
+        Notes:
+            CLTV is calculated as (Customer Value / Churn Rate) * Profit Margin.
         """
         if customer_summary is None:
             customer_summary = self.customer_summary
@@ -381,21 +407,27 @@ class CLTVModel:
         
         customer_summary[cltv_colname] = (customer_value_col / churn_rate) * profit_margin_col
         self.cltv = customer_summary[cltv_colname]
-        return self.cltv
+        return customer_summary
 
     def calculate_cltv_pr(self, date_col = 'date', transaction_id_col = 'transaction_id', customer_id_col = 'customer_id', sales_amount_col = None, df=None):
         """
         Calculate and set customer lifetime value (CLTV) using the probabilistic model.
 
         Parameters:
-            date_col (str): Column name for date. Default is 'date'.
-            transaction_id_col (str): Column name for transaction ID. Default is 'transaction_id'.
-            customer_id_col (str): Column name for customer ID. Default is 'customer_id'.
-            sales_amount_col (pd.Series): Series containing sales amount. Default is the 'sales_amount' attribute.
-            df (pd.DataFrame): DataFrame to perform calculations on. Default is the 'df' attribute.
+            - date_col (str, optional): Column name for date. Default is 'date'.
+            - transaction_id_col (str, optional): Column name for transaction ID. Default is 'transaction_id'.
+            - customer_id_col (str, optional): Column name for customer ID. Default is 'customer_id'.
+            - sales_amount_col (pd.Series, optional): Series containing sales amount. Default is the 'sales_amount' attribute.
+            - df (pd.DataFrame, optional): DataFrame to perform calculations on. Default is the 'df' attribute.
 
         Returns:
             None
+
+        Raises:
+            ValueError: If the required columns are not present in the DataFrame.
+
+        Notes:
+            CLTV is calculated using a probabilistic model based on recency, frequency, and monetary values.
         """
         if df is None:
             df = self.df
@@ -428,7 +460,7 @@ class CLTVModel:
 
         self.customer_summary_pr = customer_summary_pr
         self._calculate_monetary_frequency_filter()
-
+        return customer_summary_pr
 
     def _calculate_cltv_pr_columns(self, recency_colname = 'recency', T_colname = 'T',
                                    frequency_colname = 'frequency', monetary_colname = 'monetary'):
@@ -436,10 +468,10 @@ class CLTVModel:
         Calculate and return column names for customer lifetime value (CLTV) using the probabilistic model.
 
         Parameters:
-            recency_colname (str): Column name for recency. Default is 'recency'.
-            T_colname (str): Column name for T (age of the customer). Default is 'T'.
-            frequency_colname (str): Column name for frequency. Default is 'frequency'.
-            monetary_colname (str): Column name for monetary value. Default is 'monetary'.
+            - recency_colname (str, optional): Column name for recency. Default is 'recency'.
+            - T_colname (str, optional): Column name for T (age of the customer). Default is 'T'.
+            - frequency_colname (str, optional): Column name for frequency. Default is 'frequency'.
+            - monetary_colname (str, optional): Column name for monetary value. Default is 'monetary'.
 
         Returns:
             Tuple of str: Column names for recency, T, frequency, and monetary.
@@ -455,41 +487,51 @@ class CLTVModel:
             InvoiceDate (pd.Series): Series containing invoice dates.
 
         Returns:
-            int, int: Recency and T.
+            Tuple of int: Recency and T.
         """
         InvoiceDate = pd.to_datetime(InvoiceDate)
         return (InvoiceDate.max() - InvoiceDate.min()).days
 
-
-    def _calculate_recency_today(self, InvoiceDate, days=2):
+    def _calculate_recency_today(self, InvoiceDate, df = None, date_col = 'date', days=1):
         """
         Calculate recency considering today's date based on the given InvoiceDate.
 
         Parameters:
-            InvoiceDate (pd.Series): Series containing invoice dates.
-            days (int): Number of days to consider for recency. Default is 2.
+            - InvoiceDate (pd.Series): Series containing invoice dates.
+            - df (pd.DataFrame, optional): DataFrame to retrieve the maximum date. Default is the 'df' attribute.
+            - date_col (str, optional): Column name for date. Default is 'date'.
+            - days (int, optional): Number of days to consider for recency. Default is 1.
 
         Returns:
             int: Recency considering today's date.
+
+        Notes:
+            The default value for the 'days' parameter is 1.
         """
+        if df is None:
+            df = self.df
         InvoiceDate = pd.to_datetime(InvoiceDate)
-        return (InvoiceDate.max() + pd.Timedelta(days=days) - InvoiceDate.min()).days
+        max_date = pd.to_datetime(df[date_col].max())
+        today = max_date + pd.Timedelta(days=days)
+        return (today - InvoiceDate.min()).days
 
-
-    def _calculate_monetary_frequency_filter(self, customer_summary_pr = None, monetary_col=None, frequency_col = None,
-                                             recency_col = None, T_col = None):
+    def _calculate_monetary_frequency_filter(self, customer_summary_pr=None, monetary_col=None, frequency_col=None,
+                                         recency_col=None, T_col=None):
         """
         Calculate and set monetary value, frequency, recency, and T after applying filters.
 
         Parameters:
-            customer_summary_pr (pd.DataFrame): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
-            monetary_col (pd.Series): Series containing monetary value. Default is the 'monetary' attribute.
-            frequency_col (pd.Series): Series containing frequency. Default is the 'frequency' attribute.
-            recency_col (pd.Series): Series containing recency. Default is the 'recency' attribute.
-            T_col (pd.Series): Series containing T (age of the customer). Default is the 'T' attribute.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - monetary_col (pd.Series, optional): Series containing monetary value. Default is the 'monetary' attribute.
+            - frequency_col (pd.Series, optional): Series containing frequency. Default is the 'frequency' attribute.
+            - recency_col (pd.Series, optional): Series containing recency. Default is the 'recency' attribute.
+            - T_col (pd.Series, optional): Series containing T (age of the customer). Default is the 'T' attribute.
 
         Returns:
             None
+
+        Raises:
+            ValueError: If the required columns are not present in the customer_summary_pr DataFrame.
         """
         if customer_summary_pr is None:
             customer_summary_pr = self.customer_summary_pr
@@ -511,34 +553,41 @@ class CLTVModel:
             raise ValueError(f"The {T_col.name} column is required in {customer_summary_pr}.")
 
         self.monetary = monetary_col / frequency_col
-        self.customer_summary_pr = customer_summary_pr[frequency_col > 1]
+        customer_summary_pr[monetary_col.name] = self.monetary
+
+        customer_summary_pr = customer_summary_pr[frequency_col > 1]
+        self.frequency = customer_summary_pr[frequency_col.name]
+
         self.recency = recency_col / 7
+        customer_summary_pr[recency_col.name] = self.recency
+
         self.T = T_col / 7
+        customer_summary_pr[T_col.name] = self.T
 
+        self.customer_summary_pr = customer_summary_pr
 
-    def fit_bgf_model(self, frequency_col=None, recency_col=None, T_col=None):
+    def fit_bgf_model(self, customer_summary_pr = None, frequency_colname = "frequency",
+                      recency_colname = "recency", T_colname = "T"):
         """
         Fit the Beta Geo Fitter (BG/NBD) model using the provided frequency, recency, and T values.
 
         Parameters:
-            frequency_col (pd.Series): Series containing customer transaction frequency.
-                                      Default is the 'frequency' attribute.
-            recency_col (pd.Series): Series containing recency (time since last transaction).
-                                     Default is the 'recency' attribute.
-            T_col (pd.Series): Series containing T (age of the customer).
-                              Default is the 'T' attribute.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - frequency_colname (str, optional): Column name for customer transaction frequency. Default is 'frequency'.
+            - recency_colname (str, optional): Column name for recency (time since the last transaction). Default is 'recency'.
+            - T_colname (str, optional): Column name for T (age of the customer). Default is 'T'.
 
         Returns:
             None
         """
-        if frequency_col is None:
-            frequency_col = self.frequency
-        if recency_col is None:
-            recency_col = self.recency
-        if T_col is None:
-            T_col = self.T
-        self.bgf.fit(frequency_col, recency_col, T_col)
+        if customer_summary_pr is None:
+            customer_summary_pr = self.customer_summary_pr
+        
+        frequency_col = customer_summary_pr[frequency_colname]
+        recency_col = customer_summary_pr[recency_colname]
+        T_col = customer_summary_pr[T_colname]
 
+        self.bgf.fit(frequency_col, recency_col, T_col)
 
     def plot_frequency_recency_matrix(self):
         """
@@ -550,7 +599,6 @@ class CLTVModel:
         plot_frequency_recency_matrix(self.bgf)
         plt.show()
 
-
     def plot_probability_alive_matrix(self):
         """
         Plot the probability alive matrix using the fitted BG/NBD model.
@@ -561,25 +609,20 @@ class CLTVModel:
         plot_probability_alive_matrix(self.bgf)
         plt.show()
 
-    def predict_purchases(self, t=1, customer_summary_pr = None, frequency_col=None, recency_col=None, T_col=None, predicted_purchases_colname = 'predicted_purchases'):
+    def predict_purchases(self, t=1, customer_summary_pr=None, frequency_col=None, recency_col=None, T_col=None, predicted_purchases_colname='predicted_purchases'):
         """
         Predict the number of purchases a customer will make in the future.
 
         Parameters:
-            t (int): Time period for future predictions. Default is 1.
-            customer_summary_pr (pd.DataFrame): Customer summary DataFrame.
-                                                Default is the 'customer_summary_pr' attribute.
-            frequency_col (pd.Series): Series containing customer transaction frequency.
-                                      Default is the 'frequency' attribute.
-            recency_col (pd.Series): Series containing recency (time since last transaction).
-                                     Default is the 'recency' attribute.
-            T_col (pd.Series): Series containing T (age of the customer).
-                              Default is the 'T' attribute.
-            predicted_purchases_colname (str): Column name for predicted purchases.
-                                               Default is 'predicted_purchases'.
+            - t (int, optional): Time period for future predictions. Default is 1.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - frequency_col (pd.Series, optional): Series containing customer transaction frequency. Default is the 'frequency' attribute.
+            - recency_col (pd.Series, optional): Series containing recency (time since the last transaction). Default is the 'recency' attribute.
+            - T_col (pd.Series, optional): Series containing T (age of the customer). Default is the 'T' attribute.
+            - predicted_purchases_colname (str, optional): Column name for predicted purchases. Default is 'predicted_purchases'.
 
         Returns:
-            None
+            pd.DataFrame: Customer summary DataFrame sorted by predicted purchases.
         """
         if customer_summary_pr is None:
             customer_summary_pr = self.customer_summary_pr
@@ -595,10 +638,11 @@ class CLTVModel:
             T_col = self.T
         if T_col.name not in customer_summary_pr.columns:
             raise ValueError(f"The {T_col.name} column is required in {customer_summary_pr}.")
+
         customer_summary_pr[predicted_purchases_colname] = self.bgf.conditional_expected_number_of_purchases_up_to_time(
             t, frequency_col, recency_col, T_col)
         self.predicted_purchases = customer_summary_pr[predicted_purchases_colname]
-    
+        return customer_summary_pr.sort_values(by=predicted_purchases_colname)
  
     def plot_period_transactions(self):
         """
@@ -610,64 +654,64 @@ class CLTVModel:
         plot_period_transactions(self.bgf)
         plt.show()
 
-
-    def fit_ggf_model(self, frequency_col=None, monetary_col=None):
+    def fit_ggf_model(self, customer_summary_pr=None, frequency_colname="frequency", monetary_colname="monetary"):
         """
         Fit the Gamma-Gamma Fitter (GGF) model using the provided frequency and monetary values.
 
         Parameters:
-            frequency_col (pd.Series): Series containing customer transaction frequency.
-                                      Default is the 'frequency' attribute.
-            monetary_col (pd.Series): Series containing customer monetary value.
-                                      Default is the 'monetary' attribute.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - frequency_colname (str, optional): Column name for customer transaction frequency. Default is 'frequency'.
+            - monetary_colname (str, optional): Column name for customer monetary value. Default is 'monetary'.
 
         Returns:
             None
         """
-        if frequency_col is None:
-            frequency_col = self.frequency
-        if monetary_col is None:
-            monetary_col = self.monetary
+        if customer_summary_pr is None:
+            customer_summary_pr = self.customer_summary_pr
+        
+        frequency_col = customer_summary_pr[frequency_colname]
+        monetary_col = customer_summary_pr[monetary_colname]
+
         self.ggf.fit(frequency_col, monetary_col)
 
-
-    def calculate_expected_average_profit(self, frequency_col=None, monetary_col=None):
+    def calculate_expected_average_profit(self,customer_summary_pr = None, 
+                      frequency_colname="frequency", monetary_colname="monetary",
+                      exp_avg_profit_colname = "expected_average_profit"):
         """
         Calculate the expected average profit per transaction.
 
         Parameters:
-            frequency_col (pd.Series): Series containing customer transaction frequency.
-                                      Default is the 'frequency' attribute.
-            monetary_col (pd.Series): Series containing customer monetary value.
-                                      Default is the 'monetary' attribute.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - frequency_colname (str, optional): Column name for customer transaction frequency. Default is 'frequency'.
+            - monetary_colname (str, optional): Column name for customer monetary value. Default is 'monetary'.
+            - exp_avg_profit_colname (str, optional): Column name for expected average profit. Default is 'expected_average_profit'.
 
         Returns:
-            float: Expected average profit per transaction.
+            pd.DataFrame: Customer summary DataFrame sorted by expected average profit (descending).
         """
-        if frequency_col is None:
-            frequency_col = self.frequency
-        if monetary_col is None:
-            monetary_col = self.monetary
-        return self.ggf.conditional_expected_average_profit(frequency_col, monetary_col)
+        if customer_summary_pr is None:
+            customer_summary_pr = self.customer_summary_pr
+        
+        frequency_col = customer_summary_pr[frequency_colname]
+        monetary_col = customer_summary_pr[monetary_colname]
+        exp_avg_profit = self.ggf.conditional_expected_average_profit(frequency_col, monetary_col)
+        customer_summary_pr[exp_avg_profit_colname] = exp_avg_profit
+        return customer_summary_pr.sort_values(exp_avg_profit_colname,
+                                               ascending=False)
 
-
-    def calculate_cltv_prediction(self, time_period = 12, discount_rate =0.01, freq="W", frequency_col=None, recency_col=None, T_col=None,
-                                  monetary_col=None):
+    def calculate_cltv_prediction(self, time_period=12, discount_rate=0.01, freq="W",
+                              frequency_col=None, recency_col=None, T_col=None, monetary_col=None):
         """
         Calculate Customer Lifetime Value (CLTV) predictions using the fitted models.
 
         Parameters:
-            time_period (int): Time period for CLTV predictions. Default is 12.
-            discount_rate (float): Discount rate for future cash flows. Default is 0.01.
-            freq (str): Frequency of time periods. Default is "W" (weekly).
-            frequency_col (pd.Series): Series containing customer transaction frequency.
-                                      Default is the 'frequency' attribute.
-            recency_col (pd.Series): Series containing recency (time since last transaction).
-                                     Default is the 'recency' attribute.
-            T_col (pd.Series): Series containing T (age of the customer).
-                              Default is the 'T' attribute.
-            monetary_col (pd.Series): Series containing customer monetary value.
-                                      Default is the 'monetary' attribute.
+            - time_period (int, optional): Time period for CLTV predictions. Default is 12.
+            - discount_rate (float, optional): Discount rate for future cash flows. Default is 0.01.
+            - freq (str, optional): Frequency of time periods. Default is "W" (weekly).
+            - frequency_col (pd.Series, optional): Series containing customer transaction frequency. Default is the 'frequency' attribute.
+            - recency_col (pd.Series, optional): Series containing recency (time since the last transaction). Default is the 'recency' attribute.
+            - T_col (pd.Series, optional): Series containing T (age of the customer). Default is the 'T' attribute.
+            - monetary_col (pd.Series, optional): Series containing customer monetary value. Default is the 'monetary' attribute.
 
         Returns:
             pd.DataFrame: CLTV predictions for each customer.
@@ -681,30 +725,26 @@ class CLTVModel:
             T_col = self.T
         if monetary_col is None:
             monetary_col = self.monetary
+
         cltv_pred = self.ggf.customer_lifetime_value(
             self.bgf, frequency_col, recency_col,
             T_col, monetary_col,
             time=time_period, freq=freq, discount_rate=discount_rate
         )
-        self.cltv_pred = cltv_pred.reset_index()
-        return self.cltv_pred
-
+        cltv_pred = cltv_pred.reset_index()
+        self.cltv_pred = cltv_pred
+        return cltv_pred
 
     def merge_cltv_predictions(self, cltv_pred = None, customer_summary_pr = None, df = None, customer_id_col = "customer_id", how = 'left'):
         """
         Merge CLTV predictions with the original DataFrame.
 
         Parameters:
-            cltv_pred (pd.DataFrame): CLTV predictions DataFrame.
-                                      Default is the 'cltv_pred' attribute.
-            customer_summary_pr (pd.DataFrame): Customer summary DataFrame.
-                                                Default is the 'customer_summary_pr' attribute.
-            df (pd.DataFrame): Original DataFrame containing customer data.
-                               Default is the 'df' attribute.
-            customer_id_col (str): Column name for customer ID.
-                                   Default is "customer_id".
-            how (str): Type of merge to be performed (e.g., 'left', 'right', 'outer', 'inner').
-                       Default is 'left'.
+            - cltv_pred (pd.DataFrame, optional): CLTV predictions DataFrame. Default is the 'cltv_pred' attribute.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - df (pd.DataFrame, optional): Original DataFrame containing customer data. Default is the 'df' attribute.
+            - customer_id_col (str, optional): Column name for customer ID. Default is "customer_id".
+            - how (str, optional): Type of merge to be performed (e.g., 'left', 'right', 'outer', 'inner'). Default is 'left'.
 
         Returns:
             None
@@ -718,44 +758,40 @@ class CLTVModel:
         if cltv_pred is None:
             cltv_pred = self.cltv_pred
         
-        self.customer_summary_pr = customer_summary_pr.merge(cltv_pred, on = customer_id_col, how=how)
+        customer_summary_pr = customer_summary_pr.merge(cltv_pred, on = customer_id_col, how=how)
+        self.customer_summary_pr = customer_summary_pr
+        return customer_summary_pr
 
-
-    def create_segments(self, customer_summary_pr = None, cltv_pred = None , clv_col = 'clv', segment_colname = 'segment', num_segments = 4, labels = ["D", "C", "B", "A"]):
+    def create_segments(self, customer_summary_pr = None, clv_col = 'clv', segment_colname = 'segment', num_segments = 4, labels = ["D", "C", "B", "A"]):
         """
         Create customer segments based on CLTV predictions.
 
         Parameters:
-            customer_summary_pr (pd.DataFrame): Customer summary DataFrame.
-                                                Default is the 'customer_summary_pr' attribute.
-            cltv_pred (pd.DataFrame): CLTV predictions DataFrame.
-                                      Default is the 'cltv_pred' attribute.
-            clv_col (str): Column name for Customer Lifetime Value (CLV).
-                           Default is 'clv'.
-            segment_colname (str): Column name for the created segment.
-                                   Default is 'segment'.
-            num_segments (int): Number of segments to create. Default is 4.
-            labels (list): Labels for the created segments. Default is ["D", "C", "B", "A"].
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
+            - clv_col (str, optional): Column name for Customer Lifetime Value (CLV). Default is 'clv'.
+            - segment_colname (str, optional): Column name for the created segment. Default is 'segment'.
+            - num_segments (int, optional): Number of segments to create. Default is 4.
+            - labels (list, optional): Labels for the created segments. Default is ["D", "C", "B", "A"].
 
         Returns:
             None
         """
         if customer_summary_pr is None:
             customer_summary_pr = self.customer_summary_pr
-        if cltv_pred is None:
-            cltv_pred = self.cltv_pred
-        customer_summary_pr[segment_colname] = pd.qcut(cltv_pred[clv_col], q = num_segments, labels=labels)
+
+        customer_summary_pr[segment_colname] = pd.qcut(customer_summary_pr[clv_col],
+                                                        q = num_segments, labels=labels)
         self.segment = customer_summary_pr[segment_colname]
+
+        return customer_summary_pr.sort_values(by=clv_col, ascending=False)
 
     def display_segments_summary(self, segment_col = None, customer_summary_pr = None):
         """
         Display a summary of customer segments, including count, mean, and sum.
 
         Parameters:
-            segment_col (pd.Series): Series containing customer segments.
-                                    Default is the 'segment' attribute.
-            customer_summary_pr (pd.DataFrame): Customer summary DataFrame.
-                                                Default is the 'customer_summary_pr' attribute.
+            - segment_col (pd.Series, optional): Series containing customer segments. Default is the 'segment' attribute.
+            - customer_summary_pr (pd.DataFrame, optional): Customer summary DataFrame. Default is the 'customer_summary_pr' attribute.
 
         Returns:
             pd.DataFrame: Summary statistics for each customer segment.
