@@ -1,3 +1,11 @@
+"""
+Run Script
+
+This script starts the FastAPI application using uvicorn and opens the documentation in a web browser.
+
+Note: Ensure that the uvicorn package is installed before running this script.
+"""
+
 import subprocess
 import webbrowser
 from CLV_Analysis.API import main

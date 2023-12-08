@@ -1,3 +1,22 @@
+"""
+Data Generation Module
+
+This module provides functions for generating synthetic data for the Sales Fact,
+Product, Customer, Transaction, and Date entities. It uses the Faker library
+to generate realistic fake data for testing and development purposes.
+
+Functions:
+- generate_product: Generates fake data for a product.
+- generate_customer: Generates fake data for a customer.
+- generate_transaction: Generates fake data for a transaction.
+- generate_date: Generates fake data for a date.
+- generate_sales: Generates fake data for sales.
+
+Note:
+- The functions in this module are intended for testing and development purposes,
+  and the generated data may not reflect real-world scenarios.
+"""
+
 import faker
 from faker import Faker
 import faker_commerce
@@ -24,6 +43,15 @@ fake.add_provider(faker_commerce.Provider)
 
 
 def generate_product(product_id):
+    """
+    Generate fake data for a product.
+
+    Parameters:
+    - product_id: ID of the product.
+
+    Returns:
+    - Dictionary containing fake data for a product.
+    """
     return {
         "product_id": product_id,
         "SKU": fake.unique.hexify(text='^^^^^', upper=True),
@@ -34,6 +62,15 @@ def generate_product(product_id):
 
 
 def generate_customer(customer_id):
+    """
+    Generate fake data for a customer.
+
+    Parameters:
+    - customer_id: ID of the customer.
+
+    Returns:
+    - Dictionary containing fake data for a customer.
+    """
     start_date = datetime(1923, 1, 1)
     end_date = datetime(2005, 12, 31)
     random_date = fake.date_time_between_dates(start_date, end_date)
@@ -54,6 +91,15 @@ def generate_customer(customer_id):
 
 
 def generate_transaction(transaction_id):
+    """
+    Generate fake data for a transaction.
+
+    Parameters:
+    - transaction_id: ID of the transaction.
+
+    Returns:
+    - Dictionary containing fake data for a transaction.
+    """
     # Generate a random date between a specific date range
     start_date = datetime(2000, 1, 1)
     end_date = datetime(2023, 12, 31)
@@ -70,7 +116,15 @@ def generate_transaction(transaction_id):
 
 
 def generate_date(date_id):
+    """
+    Generate fake data for a date.
 
+    Parameters:
+    - date_id: ID of the date.
+
+    Returns:
+    - Dictionary containing fake data for a date.
+    """
     start_date = datetime(2000, 1, 1)
     current_date = start_date + timedelta(days=date_id)
 
@@ -92,6 +146,12 @@ def generate_date(date_id):
 
 
 def generate_sales():
+    """
+    Generate fake data for sales.
+
+    Returns:
+    - Dictionary containing fake data for sales.
+    """
     return {
         "product_id": np.random.randint(0, 5000),
         "quantity": np.random.randint(1, 20),

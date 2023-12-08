@@ -1,1 +1,1 @@
-# Adding non structured functionality
+""" A module for non structured functionalities. """

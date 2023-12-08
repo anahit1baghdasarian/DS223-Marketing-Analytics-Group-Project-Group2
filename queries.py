@@ -1,3 +1,36 @@
+"""
+Data Query Script
+
+This script executes a series of SQL queries using the SqlHandler class to retrieve specific data
+from a SQLite database. 
+The queries cover various useful aspects for an analysis for an arbitrary company,
+including customer, transactions, product, sales, and payment methods.
+
+Queries:
+1. Retrieve customers who made transactions in the month of January 2022.
+2. Retrieve male customers from Singapore.
+3. Retrieve products with prices greater than $50.
+4. Retrieve transactions made using credit cards.
+5. Calculate the total number of transactions grouped by month for the year 2022.
+6. Retrieve product sales made in the year 2022.
+7. Retrieve sales transactions done by customer with ID 5.
+8. Retrieve products sold in the year 2022 with quantities greater than 10.
+9. Count the number of products made in each country.
+10. Retrieve the total number of transactions for each payment method.
+11. Calculate the total sales amounts grouped by product category.
+12. Calculate the average price of products bought by female customers.
+13. Retrieve top 5 customers with the highest total sales amounts.
+14. Retrieve products that were not involved in any sales transactions.
+15. Retrieve the customer with the highest number of transactions in Spain.
+16. Calculate total sales amounts grouped by quarter for the year 2010.
+17. Retrieve products with prices less than the average price of all products.
+18. Retrieve customers who made purchases in all quarters of the year 2023.
+19. Retrieve the customers who made transactions using credit cards.
+20. Retrieve the top 5 product producers with the highest total sales amounts.
+
+Note: Each query is executed using the execute_custom_query method of the SqlHandler class.
+"""
+
 from CLV_Analysis.DB.sql_interactions import SqlHandler
 
 Inst = SqlHandler('temp', ['sales_fact', 'transactions',

@@ -1,10 +1,44 @@
+"""
+Custom Formatter for Informative Logging
+
+This module defines a custom logging formatter, `CustomFormatter`,
+to provide informative and colored output in log messages.
+
+Classes:
+- CustomFormatter: Custom formatter for informative logging.
+
+Usage:
+- Instantiate `CustomFormatter` and apply it to your logger's handler
+  to enable colored and formatted logging output.
+
+Example:
+    import logging
+    import os
+
+    logger = logging.getLogger(os.path.basename(__file__))
+    logger.setLevel(logging.DEBUG)
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+    ch.setFormatter(CustomFormatter())
+    logger.addHandler(ch)
+
+    logger.debug("debug message")
+    logger.info("Warning: Email has not been sent...")
+    logger.warning("warning message")
+    logger.error("error message")
+    logger.critical("critical message")
+
+Note:
+- The formatter uses ANSI escape codes for colored output.
+- Ensure that the console supports ANSI escape codes for proper display.
+"""
+
 import logging
 
 
 class CustomFormatter(logging.Formatter):
-
     """
-        Custom formatter for Informative Logging
+    Custom formatter for Informative Logging
     """
     grey = "\x1b[38;20m"
     violet = "\x1b[38;5;183m"
@@ -24,15 +58,12 @@ class CustomFormatter(logging.Formatter):
 
     def format(self, record):
         """
+        Parameters:
+            record : logging.LogRecord
+                The log record to be formatted.
 
-        Parameters
-        ----------
-        record : takes the record
-
-
-        Returns
-        -------
-        returns formated(colored) output
+        Returns:
+            str: Formatted and colored log message.
         """
         log_fmt = self.FORMATS.get(record.levelno)
         formatter = logging.Formatter(log_fmt)

@@ -1,3 +1,21 @@
+"""
+Data Loading Script
+
+This script loads data into an SQLite database from CSV files using the `SqlHandler` class
+from the CLV_Analysis.DB.sql_interactions module. It populates tables for customers, transactions,
+products, dates, and sales in the 'temp.db' database.
+
+Modules:
+- CLV_Analysis.DB.sql_interactions: Provides the `SqlHandler` class for SQLite database interactions.
+- sqlalchemy: SQL toolkit and Object-Relational Mapping (ORM) library.
+- CLV_Analysis.DB.schema: Defines the SQLAlchemy schema for the 'Sale' table.
+- pandas: Data manipulation and analysis library.
+
+Note:
+- Ensure that the necessary dependencies are installed, including pandas, sqlalchemy, and the CLV_Analysis package.
+- The script assumes the presence of CSV files ('customer.csv', 'transactions.csv', 'product.csv', 'date.csv', 'sales.csv')
+  in the 'data_csv' directory.
+"""
 
 from CLV_Analysis.DB.sql_interactions import SqlHandler
 from sqlalchemy import create_engine

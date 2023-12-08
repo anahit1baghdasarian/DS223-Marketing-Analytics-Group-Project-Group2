@@ -1,3 +1,18 @@
+"""
+SQLite Database Handler Module
+
+This module defines the SqlHandler class, which handles SQLite database operations,
+including table manipulation and data import/export.
+
+Classes:
+- SqlHandler: Handles SQLite database operations, including table manipulation
+  and data import/export.
+
+Note:
+- This module assumes that the database connection is established
+  using the SqlHandler class and follows a specific structure.
+"""
+
 import sqlite3
 import logging
 import pandas as pd

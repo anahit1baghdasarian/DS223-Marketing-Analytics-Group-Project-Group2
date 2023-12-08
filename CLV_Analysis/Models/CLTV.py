@@ -1,3 +1,17 @@
+"""
+CLTV Model Module
+
+This module defines the `CLTVModel` class, which is used for Customer Lifetime Value (CLTV) prediction
+based on the Beta Geo Fitter (bgf) and Gamma-Gamma Fitter (ggf) models from the lifetimes library.
+
+Classes:
+- CLTVModel: Customer Lifetime Value (CLTV) Model class.
+
+Note:
+- Ensure that the lifetimes, pandas, matplotlib, and warnings libraries are installed.
+- The CLTVModel class assumes a specific structure in the loaded database and data.
+"""
+
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
