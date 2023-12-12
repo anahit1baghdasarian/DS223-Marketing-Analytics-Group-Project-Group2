@@ -603,24 +603,37 @@ class CLTVModel:
 
         self.bgf.fit(frequency_col, recency_col, T_col)
 
-    def plot_frequency_recency_matrix(self):
+    def plot_frequency_recency_matrix(self, BetaGeoFitter = None):
         """
         Plot the frequency-recency matrix using the fitted BG/NBD model.
 
+        Parameters:
+        - BetaGeoFitter (lifetimes.BetaGeoFitter, optional): An instance of the BetaGeoFitter model. If not provided,
+          the internal BetaGeoFitter instance associated with the CLTVModel will be used.
+
         Returns:
             None
         """
-        plot_frequency_recency_matrix(self.bgf)
+        if BetaGeoFitter is None:
+            BetaGeoFitter = self.bgf
+        plot_frequency_recency_matrix(BetaGeoFitter)
         plt.show()
 
-    def plot_probability_alive_matrix(self):
+    def plot_probability_alive_matrix(self, BetaGeoFitter = None):
         """
         Plot the probability alive matrix using the fitted BG/NBD model.
 
+        Parameters:
+        - BetaGeoFitter (lifetimes.BetaGeoFitter, optional): An instance of the BetaGeoFitter model. If not provided,
+          the internal BetaGeoFitter instance associated with the CLTVModel will be used.
+
         Returns:
             None
         """
-        plot_probability_alive_matrix(self.bgf)
+        if BetaGeoFitter is None:
+            BetaGeoFitter = self.bgf
+
+        plot_probability_alive_matrix(BetaGeoFitter)
         plt.show()
 
     def predict_purchases(self, t=1, customer_summary_pr=None, frequency_col=None, recency_col=None, T_col=None, predicted_purchases_colname='predicted_purchases'):
@@ -658,14 +671,21 @@ class CLTVModel:
         self.predicted_purchases = customer_summary_pr[predicted_purchases_colname]
         return customer_summary_pr.sort_values(by=predicted_purchases_colname)
  
-    def plot_period_transactions(self):
+    def plot_period_transactions(self, BetaGeoFitter = None):
         """
         Plot the actual and predicted number of transactions in each time period.
+
+        Parameters:
+        - BetaGeoFitter (lifetimes.BetaGeoFitter, optional): An instance of the BetaGeoFitter model. If not provided,
+          the internal BetaGeoFitter instance associated with the CLTVModel will be used.
 
         Returns:
             None
         """
-        plot_period_transactions(self.bgf)
+        if BetaGeoFitter is None:
+            BetaGeoFitter = self.bgf
+
+        plot_period_transactions(BetaGeoFitter)
         plt.show()
 
     def fit_ggf_model(self, customer_summary_pr=None, frequency_colname="frequency", monetary_colname="monetary"):
