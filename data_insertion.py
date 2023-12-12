@@ -43,7 +43,7 @@ Inst1.insert_many(data1)
 
 Inst1.close_cnxn()
 
-# property
+# product
 Inst2 = SqlHandler('temp', 'product')
 
 data2 = pd.read_csv('data_csv/product.csv')
