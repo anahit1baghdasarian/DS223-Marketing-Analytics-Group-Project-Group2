@@ -2,56 +2,111 @@
 
 ## CLTV Analysis Package
 
-### Use Case 1: Customer Segmentation for Strategic Decision-Making
+## [How To use The Package Step-by-Step](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/installation/#testing-the-clv_analysis-package-step-by-step) 👣
 
-Imagine an online retailer that sells a variety of products. Using the CLV model, they analyze customer data to identify different segments:
+1. **Create a SQLite DB Schema:**
 
-High-Value Customers (Segment A):
+    - Utilize the documentation in [DB Schema](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/db_schema/#schema-building-guide) section to create a SQLite database schema for the analysis.
 
+2. **Generate Synthetic Data:**
 
-Characteristics: Frequent buyers, high average transaction value, and consistently engaged.
+    - Use the documentation in [Synthetic Data](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/synthetic_data/) section to create synthetic data for customers, products, transactions, dates, and sales.
 
-Strategy: Offer exclusive loyalty programs, early access to sales, and personalized recommendations.
+3. **Insert Synthetic Data into the SQLite DB Schema:**
 
-Medium-Value Customers (Segment B):
+    - Insert the generated synthetic data into the SQLite database using the provided insertion guides in the [Data Insertion](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/data_insertion/) section.
 
+4. **Run Queries to Test Database Functionality:**
 
-Characteristics: Moderate purchase frequency and average transaction value.
+    - Test the functionality of the database by running queries. Refer to the [SQL Interactions](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/sql_interactions/) section for guidance.
 
-Strategy: Implement targeted promotions, bundle deals, and personalized product recommendations to encourage increased spending.
+5. **Open Swagger in API:**
 
-Low-Value Customers (Segment C):
+    - Start the FastAPI application to open Swagger UI. For guidance refer to the [FastAPI Integration](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/fast_api/) section.
 
+6. **Perform CRUD Operations with FastAPI:**
 
-Characteristics: Infrequent purchases and lower average transaction value.
+    - Use the provided CRUD tools to perform Create, Read, Update, and Delete operations on the database.
 
-Strategy: Run re-engagement campaigns, provide special discounts for reactivation, and focus on building awareness.
+    - Follow the [FastAPI Integration](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/fast_api/) section for assistance.
 
-Outcome:
+7. **Check Local Database for Modifications:**
 
+    - Verify the modifications made through FastAPI by inspecting your local SQLite database.
 
-By applying marketing strategies to each segment, the online retailer optimizes its resources and increases overall profitability. For instance, they might find that high-value customers respond well to loyalty programs, leading to increased retention and higher CLV.
+8. **Import the CLTVModel() Class:**
 
-### Use Case 2: Individual CLV Calculation for Personalized Engagement
+    - Import the CLTVModel() class into your Python environment.
+    - Follow the [Complete CLV Analysis](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/clv_complete/) section for assistance.
 
-Consider a traditional brick-and-mortar retail store that sells a variety of products, including clothing, accessories, and home goods. 
+9. **Perform Analysis using CLTVModel() Class:**
 
-Individual CLV Calculation:
+    - Utilize the CLTVModel() class to conduct a comprehensive Customer Lifetime Value analysis.
+    - Follow the [Complete CLV Analysis](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/clv_complete/) section for step-by-step guidance.
 
-
-Identify high-value customers (e.g., John) with characteristics like frequent high-end purchases and participation in exclusive events.
-
-Personalized Engagement Strategy:
-
-
-Calculate individual CLV for the identified customer based on purchase history, loyalty program participation, and preferences.
-
-Develop personalized strategy including exclusive event invitations, styling recommendations, and early access to new arrivals.
-
-Outcome:
+*By following these steps, you can ensure that the CLV_Analysis package is set up correctly and functions as intended.*
 
 
-John becomes a loyal customer, consistently shopping for premium items. His positive experiences led to positive word-of-mouth, attracting more high-value customers to the store.
+
+## Use Cases
+### Use Case 1: Retail Marketing Strategy Optimization
+
+**Problem:**
+A retail chain wants to optimize its marketing strategy by identifying high-value customers and tailoring marketing campaigns to maximize customer retention and revenue.
+
+**Solution:**
+1. **CLV Analysis:**
+   - Utilize the CLV_Analysis package to perform a comprehensive analysis of customer lifetime value based on historical sales data.
+   - Apply the package's predictive modeling capabilities to forecast future CLV for individual customers.
+
+2. **Customer Segmentation:**
+   - Segment customers based on their CLV predictions, categorizing them into groups such as high-value, medium-value, and low-value customers.
+
+3. **Personalized Marketing Campaigns:**
+   - Design personalized marketing campaigns targeting high-value customers with tailored promotions, loyalty programs, or exclusive offers to enhance their loyalty and increase their spending.
+
+4. **Retention Strategies:**
+   - Implement targeted retention strategies for medium-value customers to increase their CLV and prevent potential churn.
+
+5. **Performance Monitoring:**
+   - Continuously monitor the effectiveness of marketing strategies by tracking changes in CLV, customer segments, and overall revenue.
+
+**Benefits:**
+- Improved marketing ROI through targeted campaigns.
+- Enhanced customer loyalty and retention.
+- Data-driven decision-making for marketing strategy optimization.
+
+---
+
+### Use Case 2: E-Commerce Platform Profitability Enhancement
+
+**Problem:**
+An e-commerce platform aims to enhance its overall profitability by understanding and optimizing customer lifetime value, with a focus on increasing repeat purchases and average order value.
+
+**Solution:**
+1. **Data Integration:**
+   - Integrate sales and customer data from the e-commerce platform into the CLV_Analysis package.
+
+2. **CLV Calculation:**
+   - Utilize the package to calculate customer lifetime value, taking into account factors such as frequency, recency, and monetary value.
+
+3. **Customer Value Enhancement:**
+   - Identify opportunities to increase customer value by analyzing factors like average order value and purchase frequency.
+
+4. **Cross-Selling and Upselling:**
+   - Develop targeted cross-selling and upselling strategies based on CLV insights to encourage customers to explore additional products and increase their order values.
+
+5. **Dynamic Pricing:**
+   - Implement dynamic pricing strategies for high-value customers, offering personalized discounts or incentives to boost their loyalty and spending.
+
+6. **Profit Margin Analysis:**
+   - Analyze profit margins for different customer segments and products to optimize pricing strategies for maximum profitability.
+
+**Benefits:**
+- Increased revenue through strategic pricing and promotions.
+- Improved customer engagement and satisfaction.
+- Sustainable profitability through data-driven decision-making.
+
 
 
 
