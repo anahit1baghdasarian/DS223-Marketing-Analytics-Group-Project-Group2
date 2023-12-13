@@ -104,7 +104,7 @@ We welcome contributions! Feel free to submit bug reports, feature requests, or 
 
 For further assistance or inquiries, contact our support team at 
 
-- [@anahit_baghdasaryan@edu.aua.am](mailto:anahit_baghdasaryan@edu.aua.am)
+- [@anahit_baghdasaryan2@edu.aua.am](mailto:anahit_baghdasaryan3@edu.aua.am)
 - [@natela_azoyan@edu.aua.am](mailto:natela_azoyan@edu.aua.am)
 - [@lilit_galstyan@edu.aua.am](mailto:lilit_galstyan@edu.aua.am)
 - [@ofelya_stepanyan@edu.aua.am](mailto:ofelya_stepanyan@edu.aua.am)
