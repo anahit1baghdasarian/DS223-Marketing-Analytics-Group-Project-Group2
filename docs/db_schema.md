@@ -1,6 +1,6 @@
 # **Default Database Schema**
 
-![ERD](/img/Group2_ERD.png)
+![ERD](img/Group2_ERD.png)
 
 
 ## **The Schema Module**
