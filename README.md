@@ -2,7 +2,50 @@
 
 ## CLTV Analysis Package
 
-## How To use The Package Step-by-Step
+## [How To use The Package Step-by-Step](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/installation/#testing-the-clv_analysis-package-step-by-step) 👣
+
+1. **Create a SQLite DB Schema:**
+
+    - Utilize the documentation in [DB Schema](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/db_schema/#schema-building-guide) section to create a SQLite database schema for the analysis.
+
+2. **Generate Synthetic Data:**
+
+    - Use the documentation in [Synthetic Data](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/synthetic_data/) section to create synthetic data for customers, products, transactions, dates, and sales.
+
+3. **Insert Synthetic Data into the SQLite DB Schema:**
+
+    - Insert the generated synthetic data into the SQLite database using the provided insertion guides in the [Data Insertion](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/data_insertion/) section.
+
+4. **Run Queries to Test Database Functionality:**
+
+    - Test the functionality of the database by running queries. Refer to the [SQL Interactions](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/sql_interactions/) section for guidance.
+
+5. **Open Swagger in API:**
+
+    - Start the FastAPI application to open Swagger UI. For guidance refer to the [FastAPI Integration](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/fast_api/) section.
+
+6. **Perform CRUD Operations with FastAPI:**
+
+    - Use the provided CRUD tools to perform Create, Read, Update, and Delete operations on the database.
+
+    - Follow the [FastAPI Integration](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/fast_api/) section for assistance.
+
+7. **Check Local Database for Modifications:**
+
+    - Verify the modifications made through FastAPI by inspecting your local SQLite database.
+
+8. **Import the CLTVModel() Class:**
+
+    - Import the CLTVModel() class into your Python environment.
+    - Follow the [Complete CLV Analysis](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/clv_complete/) section for assistance.
+
+9. **Perform Analysis using CLTVModel() Class:**
+
+    - Utilize the CLTVModel() class to conduct a comprehensive Customer Lifetime Value analysis.
+    - Follow the [Complete CLV Analysis](https://anahit1baghdasarian.github.io/DS223-Marketing-Analytics-Group-Project-Group2/clv_complete/) section for step-by-step guidance.
+
+*By following these steps, you can ensure that the CLV_Analysis package is set up correctly and functions as intended.*
+
 
 
 ## Use Cases
