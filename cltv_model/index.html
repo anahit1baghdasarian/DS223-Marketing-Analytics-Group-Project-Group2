@@ -1,0 +1,1637 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../fast_api/">
+      
+      
+        <link rel="next" href="../clv_complete/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+    
+    
+      
+        <title>CLTVModel() Class - CLV Analysis</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cltvmodel-class" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="CLV Analysis" class="md-header__button md-logo" aria-label="CLV Analysis" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CLV Analysis
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CLTVModel() Class
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../installation/" class="md-tabs__link">
+        
+  
+    
+  
+  User Guide
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../logger/" class="md-tabs__link">
+        
+  
+    
+  
+  Logger
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../db_schema/" class="md-tabs__link">
+        
+  
+    
+  
+  DB Schema
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../synthetic_data/" class="md-tabs__link">
+        
+  
+    
+  
+  Synthetic Data
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../sql_interactions/" class="md-tabs__link">
+        
+  
+    
+  
+  SQL Interactions
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../data_insertion/" class="md-tabs__link">
+        
+  
+    
+  
+  Data Insertion
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../fast_api/" class="md-tabs__link">
+        
+  
+    
+  
+  FastAPI Integration
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  CLTVModel() Class
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../clv_complete/" class="md-tabs__link">
+        
+  
+    
+  
+  Complete CLV Analysis
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CLV Analysis" class="md-nav__button md-logo" aria-label="CLV Analysis" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    CLV Analysis
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logger/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logger
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../db_schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DB Schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../synthetic_data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Synthetic Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql_interactions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL Interactions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data_insertion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data Insertion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fast_api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FastAPI Integration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    CLTVModel() Class
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    CLTVModel() Class
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#load-data-from-the-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Load data from the database.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display-information-about-the-dataframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display information about the DataFrame
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-the-sales-amount-based-on-unit-price-and-quantity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set the sales amount based on unit price and quantity.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-customer-summary-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set customer summary metrics.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-average-order-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set average order value.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-purchase-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set purchase frequency.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-repeat-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set repeat rate.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-churn-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set churn rate.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-profit-margin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set profit margin.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-customer-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set customer value.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-customer-lifetime-value-cltv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set customer lifetime value (CLTV).
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-customer-lifetime-value-cltv-using-the-probabilistic-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set customer lifetime value (CLTV) using the probabilistic model.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#return-column-names-for-customer-lifetime-value-cltv-using-the-probabilistic-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return column names for customer lifetime value (CLTV) using the probabilistic model.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secondary-method-used-to-calculate-cltv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secondary method used to calculate CLTV.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secondary-method-used-to-calculate-cltv-considering-a-specific-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      Secondary method used to calculate CLTV, considering a specific date.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-and-set-monetary-value-frequency-recency-and-t-after-applying-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate and set monetary value, frequency, recency, and T after applying filters.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fit-the-beta-geo-fitter-bgnbd-model-using-the-provided-frequency-recency-and-t-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fit the Beta Geo Fitter (BG/NBD) model using the provided frequency, recency, and T values.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plot-the-frequency-recency-matrix-using-the-fitted-bgnbd-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plot the frequency-recency matrix using the fitted BG/NBD model.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plot-the-probability-alive-matrix-using-the-fitted-bgnbd-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plot the probability alive matrix using the fitted BG/NBD model.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predict-the-number-of-purchases-a-customer-will-make-in-the-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      Predict the number of purchases a customer will make in the future.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plot-the-actual-and-predicted-number-of-transactions-in-each-time-period" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plot the actual and predicted number of transactions in each time period.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fit-the-gamma-gamma-fitter-ggf-model-using-the-provided-frequency-and-monetary-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fit the Gamma-Gamma Fitter (GGF) model using the provided frequency and monetary values.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-the-expected-average-profit-per-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate the expected average profit per transaction.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculate-customer-lifetime-value-cltv-predictions-using-the-fitted-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calculate Customer Lifetime Value (CLTV) predictions using the fitted models.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merge-cltv-predictions-with-the-original-dataframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      Merge CLTV predictions with the original DataFrame.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-customer-segments-based-on-cltv-predictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create customer segments based on CLTV predictions.
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display-a-summary-of-customer-segments-including-count-mean-and-sum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Display a summary of customer segments, including count, mean, and sum.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clv_complete/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Complete CLV Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="cltvmodel-class"><strong>CLTVModel() Class</strong></h1>
+<p>The <code>CLTVModel</code> class is used for Customer Lifetime Value (CLTV) prediction based on the Beta Geo Fitter (<code>bgf</code>) and Gamma-Gamma Fitter (<code>ggf</code>) models from the lifetimes library.</p>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>
+<p>Ensure that the lifetimes, pandas, matplotlib, and warnings libraries are installed.</p>
+</li>
+<li>
+<p>The CLTVModel class assumes a specific structure in the loaded database and data.</p>
+</li>
+</ul>
+<hr />
+<h2 id="load-data-from-the-database">Load data from the database.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">load_data</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="s1">        SELECT</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="s1">            s.sales_id,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="s1">            d.date,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="s1">            s.customer_id,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="s1">            s.transaction_id,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="s1">            p.product_category,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="s1">            p.SKU,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="s1">            s.quantity,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="s1">            p.price as unit_price</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="s1">        FROM</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="s1">            date d </span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s1">        JOIN</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s1">            sales_fact s ON d.date_id = s.date_id</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="s1">        JOIN</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s1">            product p ON s.product_id = p.product_id;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="s1">        &#39;&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>query (str)</code></strong>: SQL query to retrieve the data. Default is the provided query.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Loaded DataFrame.</li>
+</ul>
+<hr />
+<h2 id="display-information-about-the-dataframe">Display information about the DataFrame</h2>
+<p><strong>Including shape, info, unique values, missing values, quantiles, and head.</strong></p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">check_data</span><span class="p">(</span><span class="n">head</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>head (int)</code>:</strong>  Number of rows to display. Default is 7.</p>
+</li>
+<li>
+<p><strong>df <code>(pd.DataFrame)</code>:</strong>  DataFrame to check. Default is the <code>df</code> attribute.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><code>None</code></li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-the-sales-amount-based-on-unit-price-and-quantity">Calculate and set the sales amount based on unit price and quantity.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">calculate_sales_amount</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>                       <span class="n">unit_price_col</span><span class="o">=</span> <span class="s2">&quot;unit_price&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>                       <span class="n">quantity_col</span> <span class="o">=</span> <span class="s1">&#39;quantity&#39;</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>                       <span class="n">sales_amount_colname</span> <span class="o">=</span> <span class="s2">&quot;sales_amount&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>df (pd.DataFrame, optional)</code></strong>: DataFrame to perform calculations on. Default is the <code>df</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>unit_price_col (str, optional)</code></strong>: Column name of unit price. Default is <code>unit_price</code>.</p>
+</li>
+<li>
+<p><strong><code>quantity_col (str, optional)</code></strong>: Column name of quantity. Default is <code>quantity</code>.</p>
+</li>
+<li>
+<p><strong><code>sales_amount_colname (str, optional)</code></strong>: Column name for sales amount. Default is <code>sales_amount</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: DataFrame with the sales amount column added.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-customer-summary-metrics">Calculate and set customer summary metrics.</h2>
+<p><strong>Including total transactions and total sales amount.</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">calculate_customer_summary</span><span class="p">(</span><span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>                           <span class="n">customer_id_col</span><span class="o">=</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>                           <span class="n">transaction_id_col</span><span class="o">=</span> <span class="s1">&#39;transaction_id&#39;</span><span class="p">,</span> 
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>                           <span class="n">sales_amount_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>                           <span class="n">total_transactions_colname</span> <span class="o">=</span> <span class="s1">&#39;total_transactions&#39;</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>                           <span class="n">total_sales_amount_colname</span> <span class="o">=</span> <span class="s1">&#39;total_sales_amount&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>df (pd.DataFrame)</code></strong>: DataFrame to perform calculations on. Default is the <code>df</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>customer_id_col (str)</code></strong>: Column name of customer ID. Default is <code>customer_id</code>.</p>
+</li>
+<li>
+<p><strong><code>transaction_id_col (str)</code></strong>: Column name of transaction ID. Default is <code>transaction_id</code>.</p>
+</li>
+<li>
+<p><strong><code>sales_amount_col (pd.Series)</code></strong>: Series containing sales amount. Default is the <code>sales_amount</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>total_transactions_colname (str)</code></strong>: Column name for total transactions. Default is <code>total_transactions</code>.</p>
+</li>
+<li>
+<p><strong><code>total_sales_amount_colname (str)</code></strong>: Column name for total sales amount. Default is <code>total_sales_amount</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame with total transactions and total sales amount.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-average-order-value">Calculate and set average order value.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">calculate_average_order_value</span><span class="p">(</span><span class="n">customer_summary</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>                              <span class="n">total_sales_amount_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                              <span class="n">total_transactions_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                              <span class="n">average_order_value_colname</span> <span class="o">=</span> <span class="s1">&#39;average_order_value&#39;</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>total_sales_amount_col (pd.Series, optional)</code></strong>: Series containing total sales amount. Default is the <code>total_sales_amount</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>total_transactions_col (pd.Series, optional)</code></strong>: Series containing total transactions. Default is the <code>total_transactions</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>average_order_value_colname (str, optional)</code></strong>: Column name for average order value. Default is <code>average_order_value</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame with the average order value column added.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-purchase-frequency">Calculate and set purchase frequency.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">calculate_purchase_frequency</span><span class="p">(</span><span class="n">customer_summary</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>                             <span class="n">total_transactions_col</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">,</span> 
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                             <span class="n">purchase_frequency_colname</span> <span class="o">=</span> <span class="s1">&#39;purchase_frequency&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>total_transactions_col (pd.Series, optional)</code></strong>: Series containing total transactions. Default is the <code>total_transactions</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>purchase_frequency_colname (str, optional)</code></strong>: Column name for purchase frequency. Default is <code>purchase_frequency</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame with the purchase frequency column added.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-repeat-rate">Calculate and set repeat rate.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">calculate_repeat_rate</span><span class="p">(</span><span class="n">customer_summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">total_transactions_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary</code>attribute.</p>
+</li>
+<li>
+<p><strong><code>total_transactions_col (pd.Series, optional)</code></strong>: Series containing total transactions. Default is the <code>total_transactions</code> attribute.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>float</code></strong>: Calculated repeat rate. Returns 0 if no customers with more than one transaction are found.</li>
+</ul>
+<p><strong>Raises:</strong></p>
+<ul>
+<li>
+<p><strong><code>ValueError</code></strong>: If the required column is not present in the <code>customer_summary</code>DataFrame.</p>
+</li>
+<li>
+<p><strong><code>Warning</code></strong>: If no customers with more than one transaction are found, a warning is raised.</p>
+</li>
+</ul>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>The repeat rate is calculated as the ratio of customers with more than one transaction to the total number of customers.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-churn-rate">Calculate and set churn rate.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">calculate_churn_rate</span><span class="p">(</span><span class="n">repeat_rate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>repeat_rate (float)</code></strong>: Repeat rate of customers.Default is the <code>repeat_rate</code> attribute.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>float</code></strong>: Calculated churn rate.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-profit-margin">Calculate and set profit margin.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">calculate_profit_margin</span><span class="p">(</span><span class="n">profit_margin_rate</span><span class="o">=</span><span class="mf">0.10</span><span class="p">,</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>                        <span class="n">customer_summary</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>                        <span class="n">total_sales_amount_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>                        <span class="n">profit_margin_colname</span> <span class="o">=</span> <span class="s1">&#39;profit_margin&#39;</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>profit_margin_rate (float, optional)</code></strong>: Profit margin rate to be applied. Default is <code>0.10</code>.</p>
+</li>
+<li>
+<p><strong><code>customer_summary (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>total_sales_amount_col (pd.Series, optional)</code></strong>: Series containing total sales amount. Default is the <code>total_sales_amount</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>profit_margin_colname (str, optional)</code></strong>: Column name for profit margin. Default is <code>profit_margin</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame with the profit margin column added.</li>
+</ul>
+<p><strong>Raises:</strong></p>
+<p><strong><code>ValueError:</code></strong> If the required column is not present in the <code>customer_summary</code> DataFrame or if the DataFrame is empty.</p>
+<p><strong>Notes:</strong></p>
+<p>The profit margin is calculated by multiplying the total sales amount by the specified profit margin rate.</p>
+<hr />
+<h2 id="calculate-and-set-customer-value">Calculate and set customer value.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">calculate_customer_value</span><span class="p">(</span><span class="n">customer_summary</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>                         <span class="n">average_order_value_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>                         <span class="n">purchase_frequency_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>                         <span class="n">customer_value_colname</span> <span class="o">=</span> <span class="s1">&#39;customer_value&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>average_order_value_col (pd.Series, optional)</code></strong>: Series containing average order value. Default is the <code>average_order_value</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>purchase_frequency_col (pd.Series, optional)</code></strong>: Series containing purchase frequency. Default is the <code>purchase_frequency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>customer_value_colname (str, optional)</code></strong>: Column name for customer value. Default is <code>customer_value</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame with the customer value column added.</li>
+</ul>
+<p><strong>Raises:</strong></p>
+<p><strong><code>ValueError</code></strong>: If the required columns are not present in the customer_summary DataFrame.</p>
+<p><strong>Notes:</strong></p>
+<p>Customer value is calculated as the product of average order value and purchase frequency.</p>
+<hr />
+<h2 id="calculate-and-set-customer-lifetime-value-cltv">Calculate and set customer lifetime value (CLTV).</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">calculate_cltv</span><span class="p">(</span><span class="n">customer_summary</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">,</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>               <span class="n">churn_rate</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>               <span class="n">customer_value_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>               <span class="n">profit_margin_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>               <span class="n">cltv_colname</span> <span class="o">=</span> <span class="s1">&#39;clv&#39;</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>churn_rate (float, optional)</code></strong>: Churn rate of customers. Default is the <code>churn_rate</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>customer_value_col (pd.Series, optional)</code></strong>: Series containing customer value. Default is the <code>customer_value</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>profit_margin_col (pd.Series, optional)</code></strong>: Series containing profit margin. Default is the <code>profit_margin</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>cltv_colname (str, optional)</code></strong>: Column name for CLTV. Default is <code>clv</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame with the CLTV column added.</li>
+</ul>
+<p><strong>Raises:</strong></p>
+<p><strong><code>ValueError</code></strong>: If the required columns are not present in the <code>customer_summary</code> DataFrame.</p>
+<p><strong>Notes:</strong></p>
+<p>CLTV is calculated as (Customer Value / Churn Rate) * Profit Margin.</p>
+<hr />
+<h2 id="calculate-and-set-customer-lifetime-value-cltv-using-the-probabilistic-model">Calculate and set customer lifetime value (CLTV) using the probabilistic model.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">calculate_cltv_pr</span><span class="p">(</span><span class="n">date_col</span> <span class="o">=</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> 
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>                  <span class="n">transaction_id_col</span> <span class="o">=</span> <span class="s1">&#39;transaction_id&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>                  <span class="n">customer_id_col</span> <span class="o">=</span> <span class="s1">&#39;customer_id&#39;</span><span class="p">,</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>                  <span class="n">sales_amount_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>                  <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>date_col (str, optional)</code></strong>: Column name of date. Default is <code>date</code>.</p>
+</li>
+<li>
+<p><strong><code>transaction_id_col (str, optional)</code></strong>: Column name of transaction ID. Default is <code>transaction_id</code>.</p>
+</li>
+<li>
+<p><strong><code>customer_id_col (str, optional)</code></strong>: Column name of customer ID. Default is <strong>customer_id</strong>.</p>
+</li>
+<li>
+<p><strong><code>sales_amount_col (pd.Series, optional)</code></strong>: Series containing sales amount. Default is the <code>sales_amount</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>df (pd.DataFrame, optional)</code></strong>: DataFrame to perform calculations on. Default is the <code>df</code> attribute.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>None</code></strong></li>
+</ul>
+<p><strong>Raises:</strong></p>
+<p><strong><code>ValueError</code></strong>: If the required columns are not present in the DataFrame.</p>
+<p><strong>Notes:</strong></p>
+<p>CLTV is calculated using a probabilistic model based on recency, frequency, and monetary values.</p>
+<hr />
+<h2 id="return-column-names-for-customer-lifetime-value-cltv-using-the-probabilistic-model">Return column names for customer lifetime value (CLTV) using the probabilistic model.</h2>
+<p><strong>Used in calculate_cltv_pr()</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">_calculate_cltv_pr_columns</span><span class="p">(</span><span class="n">recency_colname</span> <span class="o">=</span> <span class="s1">&#39;recency&#39;</span><span class="p">,</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>                           <span class="n">T_colname</span> <span class="o">=</span> <span class="s1">&#39;T&#39;</span><span class="p">,</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>                           <span class="n">frequency_colname</span> <span class="o">=</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>                           <span class="n">monetary_colname</span> <span class="o">=</span> <span class="s1">&#39;monetary&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>recency_colname (str, optional)</code></strong>: Column name for recency. Default is <code>recency</code>.</p>
+</li>
+<li>
+<p><strong><code>T_colname (str, optional)</code></strong>: Column name for T (age of the customer). Default is <code>T</code>.</p>
+</li>
+<li>
+<p><strong><code>frequency_colname (str, optional)</code></strong>: Column name for frequency. Default is <code>frequency</code>.</p>
+</li>
+<li>
+<p><strong><code>monetary_colname (str, optional)</code></strong>: Column name for monetary value. Default is <code>monetary</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>Tuple of str</code></strong>: Column names for recency, T, frequency, and monetary.</li>
+</ul>
+<hr />
+<h2 id="secondary-method-used-to-calculate-cltv">Secondary method used to calculate CLTV.</h2>
+<p><strong>Used in calculate_cltv_pr()</strong></p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">_calculate_recency_T</span><span class="p">(</span><span class="n">InvoiceDate</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<p><strong><code>InvoiceDate (pd.Series)</code></strong>: Series containing invoice dates.</p>
+<p><strong>Returns:</strong></p>
+<p><strong><code>Tuple of int</code></strong>: Recency and T.</p>
+<hr />
+<h2 id="secondary-method-used-to-calculate-cltv-considering-a-specific-date">Secondary method used to calculate CLTV, considering a specific date.</h2>
+<p><strong>Used in calculate_cltv_pr()</strong></p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">_calculate_recency_today</span><span class="p">(</span><span class="n">InvoiceDate</span><span class="p">,</span> <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">date_col</span> <span class="o">=</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>InvoiceDate (pd.Series)</code></strong>: Series containing invoice dates.</p>
+</li>
+<li>
+<p><strong><code>df (pd.DataFrame, optional)</code></strong>: DataFrame to retrieve the maximum date. Default is the <code>df</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>date_col (str, optional)</code></strong>: Column name of date. Default is <code>date</code>.</p>
+</li>
+<li>
+<p><strong><code>days (int, optional)</code></strong>: Number of days to consider for recency. Default is 1.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>int:</code></strong> Recency considering today's date.</li>
+</ul>
+<hr />
+<h2 id="calculate-and-set-monetary-value-frequency-recency-and-t-after-applying-filters">Calculate and set monetary value, frequency, recency, and T after applying filters.</h2>
+<p><strong>Used in calculate_cltv_pr()</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">_calculate_monetary_frequency_filter</span><span class="p">(</span><span class="n">customer_summary_pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>                                     <span class="n">monetary_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>                                     <span class="n">frequency_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>                                     <span class="n">recency_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">T_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>monetary_col (pd.Series, optional)</code></strong>: Series containing monetary value. Default is the <code>monetary</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>frequency_col (pd.Series, optional)</code></strong>: Series containing frequency. Default is the <code>frequency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>recency_col (pd.Series, optional)</code></strong>: Series containing recency. Default is the <code>recency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>T_col (pd.Series, optional)</code></strong>: Series containing T (age of the customer). Default is the <code>T</code> attribute.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<p><strong>Raises:</strong></p>
+<p><strong><code>ValueError</code></strong>: If the required columns are not present in the <code>customer_summary_pr</code> DataFrame.</p>
+<hr />
+<h2 id="fit-the-beta-geo-fitter-bgnbd-model-using-the-provided-frequency-recency-and-t-values">Fit the Beta Geo Fitter (BG/NBD) model using the provided frequency, recency, and T values.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">fit_bgf_model</span><span class="p">(</span><span class="n">customer_summary_pr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>              <span class="n">frequency_colname</span> <span class="o">=</span> <span class="s2">&quot;frequency&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>              <span class="n">recency_colname</span> <span class="o">=</span> <span class="s2">&quot;recency&quot;</span><span class="p">,</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>              <span class="n">T_colname</span> <span class="o">=</span> <span class="s2">&quot;T&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>frequency_colname (str, optional)</code></strong>: Column name of the customer transaction frequency. Default is <code>frequency</code>.</p>
+</li>
+<li>
+<p><strong><code>recency_colname (str, optional)</code></strong>: Column name of the recency (time since the last transaction). Default is <code>recency</code>.</p>
+</li>
+<li>
+<p><strong><code>T_colname (str, optional)</code></strong>: Column name of the T (age of the customer). Default is <code>T</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="plot-the-frequency-recency-matrix-using-the-fitted-bgnbd-model">Plot the frequency-recency matrix using the fitted BG/NBD model.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">plot_frequency_recency_matrix</span><span class="p">(</span><span class="n">BetaGeoFitter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>BetaGeoFitter (lifetimes.BetaGeoFitter, optional)</code></strong>: An instance of the BetaGeoFitter model. If not provided, the internal BetaGeoFitter instance associated with the CLTVModel will be used.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="plot-the-probability-alive-matrix-using-the-fitted-bgnbd-model">Plot the probability alive matrix using the fitted BG/NBD model.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">plot_probability_alive_matrix</span><span class="p">(</span><span class="n">BetaGeoFitter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>BetaGeoFitter (lifetimes.BetaGeoFitter, optional)</code></strong>: An instance of the BetaGeoFitter model. If not provided, the internal BetaGeoFitter instance associated with the CLTVModel will be used.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="predict-the-number-of-purchases-a-customer-will-make-in-the-future">Predict the number of purchases a customer will make in the future.</h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">predict_purchases</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">customer_summary_pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>                  <span class="n">frequency_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>                  <span class="n">recency_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>                  <span class="n">T_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>                  <span class="n">predicted_purchases_colname</span><span class="o">=</span><span class="s1">&#39;predicted_purchases&#39;</span><span class="p">)</span>
+</code></pre></div>
+<strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>t (int, optional)</code></strong>: Time period for future predictions. Default is 1.</p>
+</li>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>frequency_col (pd.Series, optional)</code></strong>: Series containing customer transaction frequency. Default is the <code>frequency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>recency_col (pd.Series, optional)</code></strong>: Series containing recency (time since the last transaction). Default is the <code>recency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>T_col (pd.Series, optional)</code></strong>: Series containing T (age of the customer). Default is the <code>T</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>predicted_purchases_colname (str, optional)</code></strong>: Column name for predicted purchases. Default is <code>predicted_purchases</code>.</p>
+</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame sorted by predicted purchases.</li>
+</ul>
+<hr />
+<h2 id="plot-the-actual-and-predicted-number-of-transactions-in-each-time-period">Plot the actual and predicted number of transactions in each time period.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">plot_period_transactions</span><span class="p">(</span><span class="n">BetaGeoFitter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li><strong><code>BetaGeoFitter (lifetimes.BetaGeoFitter, optional)</code></strong>: An instance of the BetaGeoFitter model. If not provided, the internal BetaGeoFitter instance associated with the CLTVModel will be used.</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="fit-the-gamma-gamma-fitter-ggf-model-using-the-provided-frequency-and-monetary-values">Fit the Gamma-Gamma Fitter (GGF) model using the provided frequency and monetary values.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">fit_ggf_model</span><span class="p">(</span><span class="n">customer_summary_pr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>              <span class="n">frequency_colname</span><span class="o">=</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>              <span class="n">monetary_colname</span><span class="o">=</span><span class="s2">&quot;monetary&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is <code>the customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>frequency_colname (str, optional)</code></strong>: Column name of customer transaction frequency. Default is <code>frequency</code>.</p>
+</li>
+<li>
+<p><strong><code>monetary_colname (str, optional)</code></strong>: Column name of customer monetary value. Default is <code>monetary</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="calculate-the-expected-average-profit-per-transaction">Calculate the expected average profit per transaction.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">calculate_expected_average_profit</span><span class="p">(</span><span class="n">customer_summary_pr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>                                  <span class="n">frequency_colname</span><span class="o">=</span><span class="s2">&quot;frequency&quot;</span><span class="p">,</span> 
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>                                  <span class="n">monetary_colname</span><span class="o">=</span><span class="s2">&quot;monetary&quot;</span><span class="p">,</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>                                  <span class="n">exp_avg_profit_colname</span> <span class="o">=</span> <span class="s2">&quot;expected_average_profit&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>frequency_colname (str, optional)</code></strong>: Column name for customer transaction frequency. Default is <code>frequency</code>.</p>
+</li>
+<li>
+<p><strong><code>monetary_colname (str, optional)</code></strong>: Column name of customer monetary value. Default is <code>monetary</code>.</p>
+</li>
+<li>
+<p><strong><code>exp_avg_profit_colname (str, optional)</code></strong>: Column name for expected average profit. Default is <code>expected_average_profit</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Customer summary DataFrame sorted by expected average profit (descending).</li>
+</ul>
+<hr />
+<h2 id="calculate-customer-lifetime-value-cltv-predictions-using-the-fitted-models">Calculate Customer Lifetime Value (CLTV) predictions using the fitted models.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">calculate_cltv_prediction</span><span class="p">(</span><span class="n">time_period</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>                          <span class="n">discount_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>                          <span class="n">freq</span><span class="o">=</span><span class="s2">&quot;W&quot;</span><span class="p">,</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>                          <span class="n">frequency_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>                          <span class="n">recency_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>                          <span class="n">T_col</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>                          <span class="n">monetary_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>time_period (int, optional)</code></strong>: Time period for CLTV predictions. Default is 12.</p>
+</li>
+<li>
+<p><strong><code>discount_rate (float, optional)</code></strong>: Discount rate for future cash flows. Default is 0.01.</p>
+</li>
+<li>
+<p><strong><code>freq (str, optional)</code></strong>: Frequency of time periods. Default is <code>W</code> (weekly).
+{“D”, “H”, “M”, “W”} for day, hour, month, week.</p>
+</li>
+<li>
+<p><strong><code>frequency_col (pd.Series, optional)</code></strong>: Series containing customer transaction frequency. Default is the <code>frequency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>recency_col (pd.Series, optional)</code></strong>: Series containing recency (time since the last transaction). Default is the <code>recency</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>T_col (pd.Series, optional)</code></strong>: Series containing T (age of the customer). Default is the <code>T</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>monetary_col (pd.Series, optional)</code></strong>: Series containing customer monetary value. Default is the <code>monetary</code> attribute.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>pd.DataFrame</code></strong>: CLTV predictions for each customer.</p>
+<hr />
+<h2 id="merge-cltv-predictions-with-the-original-dataframe">Merge CLTV predictions with the original DataFrame.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">merge_cltv_predictions</span><span class="p">(</span><span class="n">cltv_pred</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>                       <span class="n">customer_summary_pr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>                       <span class="n">df</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>                       <span class="n">customer_id_col</span> <span class="o">=</span> <span class="s2">&quot;customer_id&quot;</span><span class="p">,</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>                       <span class="n">how</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>cltv_pred (pd.DataFrame, optional)</code></strong>: CLTV predictions DataFrame. Default is the <code>cltv_pred</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>df (pd.DataFrame, optional)</code></strong>: Original DataFrame containing customer data. Default is the <code>df</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>customer_id_col (str, optional)</code></strong>: Column name of customer ID. Default is <code>customer_id</code>.</p>
+</li>
+<li>
+<p><strong><code>how (str, optional)</code></strong>: Type of merge to be performed (e.g., 'left', 'right', 'outer', 'inner'). Default is <code>left</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="create-customer-segments-based-on-cltv-predictions">Create customer segments based on CLTV predictions.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">create_segments</span><span class="p">(</span><span class="n">customer_summary_pr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>                <span class="n">clv_col</span> <span class="o">=</span> <span class="s1">&#39;clv&#39;</span><span class="p">,</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>                <span class="n">segment_colname</span> <span class="o">=</span> <span class="s1">&#39;segment&#39;</span><span class="p">,</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>                <span class="n">num_segments</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>                <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;D&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>clv_col (str, optional)</code></strong>: Column name for Customer Lifetime Value (CLV). Default is <code>clv</code>.</p>
+</li>
+<li>
+<p><strong><code>segment_colname (str, optional)</code></strong>: Column name for the created segment. Default is <code>segment</code>.</p>
+</li>
+<li>
+<p><strong><code>num_segments (int, optional)</code></strong>: Number of segments to create. Default is 4.</p>
+</li>
+<li>
+<p><strong><code>labels (list, optional)</code></strong>: Labels for the created segments. Default is <code>["D", "C", "B", "A"]</code>.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<p><strong><code>None</code></strong></p>
+<hr />
+<h2 id="display-a-summary-of-customer-segments-including-count-mean-and-sum">Display a summary of customer segments, including count, mean, and sum.</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">display_segments_summary</span><span class="p">(</span><span class="n">segment_col</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">customer_summary_pr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameters:</strong></p>
+<ul>
+<li>
+<p><strong><code>segment_col (pd.Series, optional)</code></strong>: Series containing customer segments. Default is the <code>segment</code> attribute.</p>
+</li>
+<li>
+<p><strong><code>customer_summary_pr (pd.DataFrame, optional)</code></strong>: Customer summary DataFrame. Default is the <code>customer_summary_pr</code> attribute.</p>
+</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong><code>pd.DataFrame</code></strong>: Summary statistics for each customer segment.</li>
+</ul>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  </body>
+</html>
